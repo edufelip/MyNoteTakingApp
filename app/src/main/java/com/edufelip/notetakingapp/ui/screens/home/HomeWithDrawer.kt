@@ -1,6 +1,7 @@
-package com.edufelip.notetakingapp.ui.home
+package com.edufelip.notetakingapp.ui.screens.home
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -13,18 +14,20 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.edufelip.notetakingapp.ui.emptyNotes.EmptyNotesScreen
+import com.edufelip.notetakingapp.R
+import com.edufelip.notetakingapp.ui.screens.emptyNotes.EmptyNotesScreen
 import com.edufelip.notetakingapp.ui.theme.NoteTakingAppTheme
 import kotlinx.coroutines.launch
 
 @Composable
 fun HomeWithDrawer(
-    onCreateNote: () -> Unit = {},
-    onImportNotes: () -> Unit = {}
+    onCreateNoteClicked: () -> Unit = {},
+    onImportNotesClicked: () -> Unit = {},
+    drawerState: DrawerState,
 ) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
     ModalNavigationDrawer(
@@ -32,13 +35,13 @@ fun HomeWithDrawer(
         drawerContent = {
             ModalDrawerSheet {
                 Text(
-                    text = "My Notes",
+                    text = stringResource(R.string.my_notes),
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(16.dp)
                 )
                 HorizontalDivider()
                 NavigationDrawerItem(
-                    label = { Text("All Notes") },
+                    label = { Text(stringResource(R.string.all_notes)) },
                     selected = true,
                     onClick = {
                         scope.launch { drawerState.close() }
@@ -46,7 +49,7 @@ fun HomeWithDrawer(
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
                 NavigationDrawerItem(
-                    label = { Text("Settings") },
+                    label = { Text(stringResource(R.string.settings)) },
                     selected = false,
                     onClick = {
                         scope.launch { drawerState.close() }
@@ -58,17 +61,28 @@ fun HomeWithDrawer(
     ) {
         EmptyNotesScreen(
             modifier = Modifier,
-            onCreateNote = onCreateNote,
-            onImportNotes = onImportNotes,
-            openDrawer = { scope.launch { drawerState.open() } }
+            onCreateNoteClicked = onCreateNoteClicked,
+            onImportNotes = onImportNotesClicked,
+            openDrawer = { scope.launch { drawerState.open() } },
         )
     }
 }
 
-@Preview(showBackground = true, widthDp = 360, heightDp = 800)
+@Preview
 @Composable
-fun PreviewHomeWithDrawer() {
+fun PreviewHomeWithDrawerOpen() {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Open)
     NoteTakingAppTheme {
-       HomeWithDrawer()
+       HomeWithDrawer(drawerState = drawerState)
    }
+}
+
+
+@Preview
+@Composable
+fun PreviewHomeWithDrawerClosed() {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    NoteTakingAppTheme {
+        HomeWithDrawer(drawerState = drawerState)
+    }
 }

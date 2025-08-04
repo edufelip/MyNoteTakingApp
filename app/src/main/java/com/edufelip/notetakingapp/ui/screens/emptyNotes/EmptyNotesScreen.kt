@@ -1,12 +1,27 @@
-package com.edufelip.notetakingapp.ui.emptyNotes
+package com.edufelip.notetakingapp.ui.screens.emptyNotes
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,13 +33,13 @@ import androidx.compose.ui.unit.dp
 import com.edufelip.notetakingapp.R
 import com.edufelip.notetakingapp.ui.theme.ButtonText
 import com.edufelip.notetakingapp.ui.theme.GrayText
-import com.edufelip.notetakingapp.ui.theme.ImportNotes
 import com.edufelip.notetakingapp.ui.theme.NoteTakingAppTheme
+import com.edufelip.notetakingapp.ui.theme.PrimaryRed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmptyNotesScreen(
-    onCreateNote: () -> Unit,
+    onCreateNoteClicked: () -> Unit,
     onImportNotes: () -> Unit,
     openDrawer: () -> Unit,
     modifier: Modifier = Modifier
@@ -44,7 +59,7 @@ fun EmptyNotesScreen(
                         Icon(Icons.Default.Menu, contentDescription = "Menu")
                     }
                 }, actions = {
-                    IconButton(onClick = { /* TODO: Search */ }) {
+                    IconButton(onClick = { }) {
                         Icon(Icons.Default.Search, contentDescription = "Search")
                     }
                 }, colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -94,7 +109,9 @@ fun EmptyNotesScreen(
                 Spacer(modifier = Modifier.height(40.dp))
 
                 Button(
-                    onClick = onCreateNote,
+                    onClick = {
+                        onCreateNoteClicked()
+                    },
                     shape = RoundedCornerShape(14.dp),
                     modifier = Modifier
                         .fillMaxWidth(0.85f)
@@ -114,7 +131,7 @@ fun EmptyNotesScreen(
                 ) {
                     Text(
                         text = "Import Notes", style = MaterialTheme.typography.bodyMedium.copy(
-                            color = ImportNotes, fontWeight = FontWeight.Bold
+                            color = PrimaryRed, fontWeight = FontWeight.Bold
                         )
                     )
                 }
@@ -124,13 +141,13 @@ fun EmptyNotesScreen(
 }
 
 @Composable
-@Preview(showBackground = true, widthDp = 360, heightDp = 800)
+@Preview
 fun PreviewEmptyNotesScreen() {
     NoteTakingAppTheme {
         EmptyNotesScreen(
-            onCreateNote = {},
+            onCreateNoteClicked = {},
             onImportNotes = {},
-            openDrawer = {},
+            openDrawer = {}
         )
     }
 }
