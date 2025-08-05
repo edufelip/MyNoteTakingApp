@@ -59,7 +59,14 @@ fun EmptyNotesScreen(
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 Text(
-                    text = "Add a note about anything (your thoughts on climate change, or your history essay) and share it witht the world.",
+                    text = "Create Your First Note",
+                    style = MaterialTheme.typography.titleLarge,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = 32.dp)
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = "Add a note about anything (your thoughts on climate change, or your history essay) and share it with the world.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = GrayText,
                     textAlign = TextAlign.Center,
